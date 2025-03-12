@@ -6,7 +6,7 @@ use smithy.framework#ValidationException
 
 @cors(
   maxAge: -1,
-  additionalAllowedHeaders: ["content-type", "x-amz-user-agent"],
+  additionalAllowedHeaders: ["content-type", "X-Amz-User-Agent"],
 )
 
 @aws.apigateway#requestValidator("full")
@@ -32,6 +32,7 @@ resource StudentResource {
   uri: "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CreateStudentHandler.Arn}:live/invocations",
   credentials: "${ApiGatewayExecutionRole.Arn}",
 )
+@optionalAuth
 @idempotent
 @http(code: 200, method: "POST", uri: "/students")
 operation CreateStudent {
@@ -66,6 +67,7 @@ structure CreateStudentResponse {
   uri: "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ListStudentsHandler.Arn}:live/invocations",
   credentials: "${ApiGatewayExecutionRole.Arn}",
 )
+@optionalAuth
 @readonly
 @paginated(items: "students")
 @http(code: 200, method: "GET", uri: "/students")

@@ -14,6 +14,15 @@ export function getApiGatewayHandler(handler: ServiceHandler<HandlerContext>): A
 
     const httpRequest = convertEvent(event);
     const httpResponse = await handler.handle(httpRequest, context);
+
+    httpResponse.headers = {
+      ...httpResponse.headers,
+      'Access-Control-Allow-Headers': '*',
+      // TODO: Restrict to the current domain
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': '*',
+    };
+
     return convertVersion1Response(httpResponse);
   };
 }
