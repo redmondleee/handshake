@@ -26,7 +26,7 @@ export class StorageStack extends Stack {
 
     this.table = new dynamodb.Table(this, 'Table', {
       partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING },
-      sortKey: { name: 'check_in_time', type: dynamodb.AttributeType.NUMBER },
+      sortKey: { name: 'check_in_time', type: dynamodb.AttributeType.STRING },
       timeToLiveAttribute: 'expiration_time',
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       pointInTimeRecovery: true,
@@ -34,7 +34,7 @@ export class StorageStack extends Stack {
     this.table.grantReadWriteData(props.role);
     this.table.addGlobalSecondaryIndex({
       indexName: 'check_in_time__last_name',
-      partitionKey: { name: 'check_in_time', type: dynamodb.AttributeType.NUMBER },
+      partitionKey: { name: 'check_in_time', type: dynamodb.AttributeType.STRING },
       sortKey: { name: 'last_name', type: dynamodb.AttributeType.STRING },
     });
   }

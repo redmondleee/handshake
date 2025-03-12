@@ -23,4 +23,5 @@ const storageStack = new StorageStack(app, 'StorageStack', {
 
 serviceStack.functions.forEach(f => f.addEnvironment('tableName', storageStack.table.tableName));
 
+
 app.synth();

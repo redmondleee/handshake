@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import {
   DynamoDBClient,
   PutItemCommand,
-  QueryCommand,
+  ScanCommand,
 } from '@aws-sdk/client-dynamodb';
 import {
   marshall as defaultMarshall,
@@ -49,7 +49,7 @@ export class DataManager {
         id,
         first_name: student.firstName,
         last_name: student.lastName,
-        check_in_time: checkInTime,
+        check_in_time: checkInTime.toISOString(),
       }),
     }));
 
@@ -64,14 +64,9 @@ export class DataManager {
     maxResults: number,
     nextToken?: string,
   ): Promise<{ students: Student[], nextToken?: string }> {
-    const result = await this.client.send(new QueryCommand({
+    const result = await this.client.send(new ScanCommand({
       TableName: this.tableName,
       IndexName: 'check_in_time__last_name',
-      KeyConditionExpression: 'check_in_time > :check_in_time',
-      ExpressionAttributeValues: marshall({
-        ':check_in_time': 0,
-      }),
-      ScanIndexForward: false,
       ExclusiveStartKey: nextToken ? JSON.parse(nextToken) : undefined,
       Limit: maxResults,
     }));
