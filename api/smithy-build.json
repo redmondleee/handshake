@@ -1,0 +1,121 @@
+{
+  "version": "1.0",
+  "sources": ["model"],
+  "maven": {
+    "dependencies": [
+      "software.amazon.smithy:smithy-validation-model:1.54.0",
+      "software.amazon.smithy.typescript:smithy-typescript-codegen:0.25.0",
+      "software.amazon.smithy:smithy-aws-traits:1.54.0",
+      "software.amazon.smithy:smithy-aws-apigateway-traits:1.54.0",
+      "software.amazon.smithy:smithy-aws-apigateway-openapi:1.54.0",
+      "software.amazon.smithy:smithy-openapi:1.54.0"
+    ]
+  },
+  "projections": {
+    "aws-sdk": {
+      "transforms": [
+        {
+          "name": "includeNamespaces",
+          "args": {
+            "namespaces": ["aws.protocols", "aws.api", "com.handshake"]
+          }
+        },
+        {
+          "name": "removeUnusedShapes"
+        }
+      ]
+    },
+    "ts-server": {
+      "plugins": {
+        "typescript-ssdk-codegen": {
+          "package": "handshake-server",
+          "packageVersion": "0.0.1"
+        }
+      }
+    },
+    "apigateway": {
+      "plugins": {
+        "openapi": {
+          "service": "com.handshake#Handshake",
+          "protocol": "aws.protocols#restJson1",
+          "apiGatewayType": "REST"
+        }
+      }
+    }
+  },
+  "plugins": {
+    "typescript-client-codegen": {
+      "service": "com.handshake#Handshake",
+      "package": "handshake",
+      "packageVersion": "0.0.1",
+      "packageJson": {
+        "license": "Apache-2.0"
+      }
+    },
+    "openapi": {
+      "service": "com.handshake#Handshake",
+      "schemaDocumentExtensions": {
+        // Map errors from API Gateway to correct error structures
+        "x-amazon-apigateway-gateway-responses": {
+          "DEFAULT_4XX": {
+            "responseParameters": {
+              "gatewayresponse.header.x-amzn-ErrorType": "'ValidationException'"
+            }
+          },
+          "BAD_REQUEST_BODY": {
+            "responseParameters": {
+              "gatewayresponse.header.x-amzn-ErrorType": "'ValidationException'"
+            },
+            "responseTemplates": { "application/json": "{ \"message\": \"$context.error.validationErrorString\" }" }
+          },
+          "BAD_REQUEST_PARAMETERS": {
+            "responseParameters": {
+              "gatewayresponse.header.x-amzn-ErrorType": "'ValidationException'"
+            },
+            "responseTemplates": { "application/json": "{ \"message\": \"$context.error.validationErrorString\" }" }
+          },
+          "ACCESS_DENIED": {
+            "responseParameters": {
+              "gatewayresponse.header.x-amzn-ErrorType": "'AccessDeniedException'"
+            }
+          },
+          "EXPIRED_TOKEN": {
+            "responseParameters": {
+              "gatewayresponse.header.x-amzn-ErrorType": "'AccessDeniedException'"
+            }
+          },
+          "INVALID_SIGNATURE": {
+            "responseParameters": {
+              "gatewayresponse.header.x-amzn-ErrorType": "'AccessDeniedException'"
+            }
+          },
+          "MISSING_AUTHENTICATION_TOKEN": {
+            "responseParameters": {
+              "gatewayresponse.header.x-amzn-ErrorType": "'AccessDeniedException'"
+            }
+          },
+          "RESOURCE_NOT_FOUND": {
+            "responseParameters": {
+              "gatewayresponse.header.x-amzn-ErrorType": "'ResourceNotFoundException'"
+            }
+          },
+          "THROTTLED": {
+            "responseParameters": {
+              "gatewayresponse.header.x-amzn-ErrorType": "'ThrottlingException'"
+            }
+          },
+          "QUOTA_EXCEEDED": {
+            "responseParameters": {
+              "gatewayresponse.header.x-amzn-ErrorType": "'ThrottlingException'"
+            }
+          },
+          "DEFAULT_5XX": {
+            "responseParameters": {
+              "gatewayresponse.header.x-amzn-ErrorType": "'InternalServerException'"
+            }
+          }
+        }
+      }
+    }
+  }
+}

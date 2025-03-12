@@ -1,0 +1,38 @@
+{
+  "name": "@wozaar/infrastructure",
+  "version": "0.1.0",
+  "bin": {
+    "wozaar": "bin/wozaar.js"
+  },
+  "scripts": {
+    "clean": "rm -rf cdk.out",
+    "lint": "eslint . --ext .ts,.tsx",
+    "build": "npm run lint && tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/node": "10.17.27",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
+    "aws-cdk": "2.x",
+    "esbuild": "^0.8.57",
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.5.6",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.9.10"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.x",
+    "constructs": "10.x",
+    "source-map-support": "^0.5.16"
+  }
+}

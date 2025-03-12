@@ -1,0 +1,7 @@
+{
+  "app": "npx ts-node bin/wozaar.ts",
+  "requireApproval": "never",
+  "context": {
+    "@aws-cdk/core:stackRelativeExports": "true"
+  }
+}
