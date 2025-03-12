@@ -1,7 +1,7 @@
-import { getCreateStudentHandler, getListStudentsHandler } from "handshake-server";
-import { CreateStudent } from "create-student";
-import { APIGatewayProxyHandler } from "aws-lambda";
-import { getApiGatewayHandler } from "./apigateway";
+import { getCreateStudentHandler } from 'handshake-server';
+import { APIGatewayProxyHandler } from 'aws-lambda';
+import { CreateStudent } from './create-student';
+import { getApiGatewayHandler } from './apigateway';
 
-// This is the entry point for the Lambda Function that services the EchoOperation
-export const lambdaHandler: APIGatewayProxyHandler = getApiGatewayHandler(getCreateStudentHandler(CreateStudent));
+// eslint-disable-next-line import/prefer-default-export
+export const handler: APIGatewayProxyHandler = getApiGatewayHandler(getCreateStudentHandler(CreateStudent));

@@ -14,6 +14,7 @@ module.exports = {
   rules: {
     // We use `console.log` as our main logger
     'no-console': 'off',
+    'max-len': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
   },

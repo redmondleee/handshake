@@ -4,7 +4,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "lint": "eslint . --ext .ts,.tsx",
-    "build": "npm run lint && tsc && npm run test && npx esbuild --bundle index.ts --target=node12 --platform=node --outfile=dist/index.js --sourcemap --external:aws-sdk --log-level=info",
+    "build": "npm run lint && tsc && npm run test && node esbuild.config.js",
     "watch": "tsc -w",
     "test": "jest"
   },
@@ -17,15 +17,14 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@shelf/jest-dynamodb": "^1.8.1",
     "@types/aws-lambda": "^8.10.72",
     "@types/jest": "^26.0.20",
-    "@types/node": "^12.12.6",
+    "@types/node": "18.x",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "aws-sdk": "^2.863.0",
-    "esbuild": "^0.8.47",
+    "esbuild": "0.x",
     "eslint": "^7.14.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-plugin-import": "^2.22.1",

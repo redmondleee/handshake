@@ -2,6 +2,7 @@ node_modules
 dist
 *.js
 *.d.ts
+!esbuild.config.js
 !jest.config.js
 !.eslintrc.js
 

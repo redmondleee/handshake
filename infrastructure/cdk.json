@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node bin/wozaar.ts",
+  "app": "npx ts-node bin/handshake.ts",
   "requireApproval": "never",
   "context": {
     "@aws-cdk/core:stackRelativeExports": "true"

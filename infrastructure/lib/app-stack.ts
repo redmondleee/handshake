@@ -1,8 +1,5 @@
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
-import * as route53 from 'aws-cdk-lib/aws-route53';
-import { DnsValidatedCertificate } from 'aws-cdk-lib/aws-certificatemanager';
-import { HttpsRedirect } from 'aws-cdk-lib/aws-route53-patterns';
 import { Stack } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 
@@ -12,16 +9,6 @@ export class AppStack extends Stack {
   readonly originAccessIdentity: cloudfront.OriginAccessIdentity;
 
   readonly distribution: cloudfront.CloudFrontWebDistribution;
-
-  readonly hostedZone: route53.IHostedZone;
-
-  readonly certificate: DnsValidatedCertificate;
-
-  readonly aRecord: route53.ARecord;
-
-  readonly aaaaRecord: route53.AaaaRecord;
-
-  readonly httpsRedirect: HttpsRedirect;
 
   /**
    * Creates all resources for this stack.

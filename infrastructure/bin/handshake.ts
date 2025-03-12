@@ -8,7 +8,7 @@ import { ServiceStack } from '../lib/service-stack';
 
 const app = new App();
 
-new AppStack(app, 'AppStack', {});
+new AppStack(app, 'AppStack');
 
 new ServiceStack(app, 'ServiceStack', {
   memorySize: 1028,

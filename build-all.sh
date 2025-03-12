@@ -8,7 +8,11 @@ set -o nounset
 
 cd api
 smithy build
-cd build/smithy/source/typescript-client-codegen
+cd build/smithy/aws-sdk/typescript-client-codegen
+yarn
+yarn build
+cd -
+cd build/smithy/ts-server/typescript-ssdk-codegen
 yarn
 yarn build
 cd -
@@ -16,7 +20,7 @@ cd ..
 
 cd app
 yarn
-yarn lint
+yarn build
 
 cd ..
 

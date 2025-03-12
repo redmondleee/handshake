@@ -38,14 +38,12 @@ export class ServiceStack extends Stack {
 
     Object.keys(operations).forEach(operation => {
       const requestHandler = new NodejsFunction(this, `${operation}Handler`, {
+        // @ts-expect-error TS7053
         entry: path.resolve(__dirname, `../../service/src/${operations[operation]}.ts`),
         bundling: {
           sourceMap: true,
           logLevel: LogLevel.INFO,
         },
-        // re2-wasm is used by the SSDK common library to do pattern validation, and uses
-        // a WASM module, so it's excluded from the bundle
-        nodeModules: ["re2-wasm"],
         memorySize: props.memorySize,
         timeout: Duration.seconds(28),
         tracing: lambda.Tracing.ACTIVE,

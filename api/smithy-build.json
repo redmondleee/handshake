@@ -4,7 +4,7 @@
   "maven": {
     "dependencies": [
       "software.amazon.smithy:smithy-validation-model:1.54.0",
-      "software.amazon.smithy.typescript:smithy-typescript-codegen:0.25.0",
+      "software.amazon.smithy.typescript:smithy-aws-typescript-codegen:0.27.0",
       "software.amazon.smithy:smithy-aws-traits:1.54.0",
       "software.amazon.smithy:smithy-aws-apigateway-traits:1.54.0",
       "software.amazon.smithy:smithy-aws-apigateway-openapi:1.54.0",

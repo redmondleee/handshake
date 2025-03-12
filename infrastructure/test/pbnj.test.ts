@@ -7,7 +7,7 @@ describe('App stack', () => {
   test('creates S3 bucket', () => {
     const app = new cdk.App();
 
-    const appStack = new AppStack(app, 'AppStack', {});
+    const appStack = new AppStack(app, 'AppStack');
 
     const template = Template.fromStack(appStack);
 
