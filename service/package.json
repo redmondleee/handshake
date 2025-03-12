@@ -9,10 +9,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.758.0",
+    "@aws-sdk/util-dynamodb": "^3.758.0",
     "@aws-smithy/server-apigateway": "^1.0.0-alpha.5",
     "@aws-smithy/server-common": "^1.0.0-alpha.5",
-    "handshake-server": "file:../api/build/smithy/ts-server/typescript-ssdk-codegen",
     "aws-embedded-metrics": "^2.0.4",
+    "handshake-server": "file:../api/build/smithy/ts-server/typescript-ssdk-codegen",
     "source-map-support": "^0.5.19",
     "uuid": "^8.3.2"
   },

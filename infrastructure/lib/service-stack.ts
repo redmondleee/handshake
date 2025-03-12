@@ -24,8 +24,22 @@ export class ServiceStack extends Stack {
 
   readonly restApiExecutionRole: iam.Role;
 
+  readonly lambdaRole: iam.Role;
+
+  readonly functions: lambda.Function[] = [];
+
   constructor(app: App, id: string, props: ServiceStackProps) {
     super(app, id, props);
+
+    this.lambdaRole = new iam.Role(this, 'lambdaRole', {
+      assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+    });
+    this.lambdaRole.addManagedPolicy(
+      iam.ManagedPolicy.fromAwsManagedPolicyName("service-role/AWSLambdaBasicExecutionRole")
+    );
+    this.lambdaRole.addManagedPolicy(
+      iam.ManagedPolicy.fromAwsManagedPolicyName('CloudWatchLambdaInsightsExecutionRolePolicy'),
+    );
 
     this.restApiExecutionRole = new iam.Role(this, 'restApiExecutionRole', {
       assumedBy: new iam.ServicePrincipal('apigateway.amazonaws.com'),
@@ -51,10 +65,8 @@ export class ServiceStack extends Stack {
         currentVersionOptions: {
           provisionedConcurrentExecutions: props.provisionedConcurrency,
         },
+        role: this.lambdaRole,
       });
-      requestHandler.role!.addManagedPolicy(
-        iam.ManagedPolicy.fromAwsManagedPolicyName('CloudWatchLambdaInsightsExecutionRolePolicy'),
-      );
       requestHandler.addLayers(lambda.LayerVersion.fromLayerVersionArn(
         requestHandler,
         'LambdaInsightsLayer',
@@ -71,6 +83,8 @@ export class ServiceStack extends Stack {
       alias.grantInvoke(this.restApiExecutionRole);
       const autoScaling = alias.addAutoScaling({ maxCapacity: 50 });
       autoScaling.scaleOnUtilization({ utilizationTarget: 0.5 });
+
+      this.functions.push(requestHandler);
     });
 
     const apiDefinition = JSON.parse(fs.readFileSync(
