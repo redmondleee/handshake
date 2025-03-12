@@ -43,6 +43,7 @@ export class ServiceStack extends Stack {
         bundling: {
           sourceMap: true,
           logLevel: LogLevel.INFO,
+          nodeModules: ['re2-wasm'],
         },
         memorySize: props.memorySize,
         timeout: Duration.seconds(28),
